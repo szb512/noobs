@@ -683,32 +683,32 @@ bool MultiImageWriteThread::dd(const QString &imagePath, const QString &device)
 void MultiImageWriteThread::patchConfigTxt()
 {
 
-        QSettings settings("/settings/noobs.conf", QSettings::IniFormat);
-        int videomode = settings.value("display_mode", 0).toInt();
+    QSettings settings("/settings/noobs.conf", QSettings::IniFormat);
+    int videomode = settings.value("display_mode", 0).toInt();
 
-        QByteArray dispOptions;
+    QByteArray dispOptions;
 
-        switch (videomode)
-        {
-        case 0: /* HDMI PREFERRED */
-            dispOptions = "hdmi_force_hotplug=1\r\nconfig_hdmi_boost=4\r\noverscan_left=24\r\noverscan_right=24\r\noverscan_top=16\r\noverscan_bottom=16\r\ndisable_overscan=0\r\n";
-            break;
-        case 1: /* HDMI VGA */
-            dispOptions = "hdmi_ignore_edid=0xa5000080\r\nhdmi_force_hotplug=1\r\nconfig_hdmi_boost=4\r\nhdmi_group=2\r\nhdmi_mode=4\r\n";
-            break;
-        case 2: /* PAL */
-            dispOptions = "hdmi_ignore_hotplug=1\r\nsdtv_mode=2\r\n";
-            break;
-        case 3: /* NTSC */
-            dispOptions = "hdmi_ignore_hotplug=1\r\nsdtv_mode=0\r\n";
-            break;
-        }
+    switch (videomode)
+    {
+    case 0: /* HDMI PREFERRED */
+        dispOptions = "hdmi_force_hotplug=1\r\nconfig_hdmi_boost=4\r\noverscan_left=24\r\noverscan_right=24\r\noverscan_top=16\r\noverscan_bottom=16\r\ndisable_overscan=0\r\n";
+        break;
+    case 1: /* HDMI VGA */
+        dispOptions = "hdmi_ignore_edid=0xa5000080\r\nhdmi_force_hotplug=1\r\nconfig_hdmi_boost=4\r\nhdmi_group=2\r\nhdmi_mode=4\r\n";
+        break;
+    case 2: /* PAL */
+        dispOptions = "hdmi_ignore_hotplug=1\r\nsdtv_mode=2\r\n";
+        break;
+    case 3: /* NTSC */
+        dispOptions = "hdmi_ignore_hotplug=1\r\nsdtv_mode=0\r\n";
+        break;
+    }
 
 
-        QFile f("/mnt2/config.txt");
-        f.open(f.Append);
-        f.write("\r\n# NOOBS Auto-generated Settings:\r\n"+dispOptions);
-        f.close();
+    QFile f("/mnt2/config.txt");
+    f.open(f.Append);
+    f.write("\r\n# NOOBS Auto-generated Settings:\r\n"+dispOptions);
+    f.close();
 
 }
 

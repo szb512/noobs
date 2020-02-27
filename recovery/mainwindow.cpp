@@ -143,7 +143,7 @@ void MainWindow::populate()
     {
         /* Try mounting read-only first, if fails try read-write as it may recover from journal */
         if (QProcess::execute("mount -o remount,ro /settings")!=0
-            && QProcess::execute("mount -o remount,rw /settings")!=0)
+                && QProcess::execute("mount -o remount,rw /settings")!=0)
         {
             if (QMessageBox::question(this,
                                       tr("Error mounting settings partition"),
@@ -152,7 +152,7 @@ void MainWindow::populate()
             {
                 QProcess::execute("umount /settings");
                 if (QProcess::execute("/usr/sbin/mkfs.ext4 " SETTINGS_PARTITION) != 0
-                    || QProcess::execute("mount " SETTINGS_PARTITION " /settings") != 0)
+                        || QProcess::execute("mount " SETTINGS_PARTITION " /settings") != 0)
                 {
                     QMessageBox::critical(this, tr("Reformat failed"), tr("SD card might be damaged"), QMessageBox::Close);
                 }
@@ -625,9 +625,9 @@ void MainWindow::displayMode(int modenr, bool silent)
     if (!silent && _settings)
     {
         _displayModeBox = new QMessageBox(QMessageBox::Question,
-                      tr("Display Mode Changed"),
-                      tr("Display mode changed to %1\nWould you like to make this setting permanent?").arg(mode),
-                      QMessageBox::Yes | QMessageBox::No);
+                                          tr("Display Mode Changed"),
+                                          tr("Display mode changed to %1\nWould you like to make this setting permanent?").arg(mode),
+                                          QMessageBox::Yes | QMessageBox::No);
         _displayModeBox->installEventFilter(this);
         _displayModeBox->exec();
 
@@ -680,7 +680,7 @@ bool MainWindow::eventFilter(QObject *, QEvent *event)
         {
             displayMode(2);
         }
-         // Composite NTSC
+        // Composite NTSC
         if (keyEvent->key() == Qt::Key_4 && _currentMode != 3)
         {
             displayMode(3);
@@ -1356,7 +1356,7 @@ void MainWindow::startImageWrite()
     connect(imageWriteThread, SIGNAL(error(QString)), this, SLOT(onError(QString)));
     connect(imageWriteThread, SIGNAL(statusUpdate(QString)), _qpd, SLOT(setLabelText(QString)));
     connect(imageWriteThread, SIGNAL(runningMKFS()), _qpd, SLOT(pauseIOaccounting()), Qt::BlockingQueuedConnection);
-    connect(imageWriteThread, SIGNAL(finishedMKFS()), _qpd , SLOT(resumeIOaccounting()), Qt::BlockingQueuedConnection);
+    connect(imageWriteThread, SIGNAL(finishedMKFS()), _qpd, SLOT(resumeIOaccounting()), Qt::BlockingQueuedConnection);
     imageWriteThread->start();
     hide();
     _qpd->exec();
